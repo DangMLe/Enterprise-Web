@@ -31,37 +31,34 @@ class User_model extends Model{
             return false;
         }
     }
-    function GetUserOtherInfo($UserInfo){
-        $this->db->select('*');
+    function GetUserInfo($UserInfo){
+        $this->db->select('Users.*, Roles.RoleName, Departments.DepartmentName');
         $this->db->from('Users');
+        $this->db->join('Roles','Users.RoleID=Roles.RoleID');
+        $this->db->join('Departments','Users.DepartmentID=Departments.DepartmentID');
         $this->db->where('UserID',$UserInfo);
+        $query = $this->db->get();
 
         $result = $query->result();
         return $result;
     }
-    function GetUserRole($UserRole){
-        $this->db->select('RoleName');
-        $this->db->from('Roles');
-        $this->db->where('RoleID',$UserRole);
-
+    function GetUserSubmissions($UserInfo){
+        $this->db->select('Submition.*, Sections.*');
+        $this->db->from('Submition');
+        $this->db->join('Sections','Submition.SectionID=Sections.SectionID');
+        $this->db->where('UserID',$UserInfo);
+        $query = $this->db->get();
         $result = $query->result();
         return $result;
     }
-    // function GetUserSubmissions($UserInfo){
-    //     $this->db->select('*');
-    //     $this->db->from('Submition');
-    //     $this->db->where('UserID',$UserInfo);
-
-    //     $result = $query->result();
-    //     return $result;
-    // }
-    //Delete User from database
-    function EditUser($UserInfo,$UserID){
+    //Edit User from database
+    function editUser($UserInfo,$UserID){
         $this->db->where('UserID',$UserID);
         $this->db->update('Users',$UserInfo);
         return true;
     }
-    function DeleteUser($UserID){
+    //Delete user from Database
+    function deleteUser($UserID){
         $this->db->where('UserID',$UserID);
         $this->db->delete('Users');
         return true;
