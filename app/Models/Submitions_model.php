@@ -12,6 +12,13 @@
             $result = $query->result();
             return $result;
         }
+        function getAllSubmitions(){
+            $this->db->select('*');
+            $this->db->from('Submitions');
+            $query = $this->db->get();
+            $result = $query->result();
+            return $results;
+        }
         function addSubmition($SubmitionInfo){
             $this->db->trans_start();
             $this->db->insert('Submitions',$SubmitionInfo);
@@ -30,19 +37,28 @@
                 return false;
             }
         }
-        function GetSubmitionInfo($UserInfo){
-            $this->db->select('Submitions.*, Sections.*, SubmitFiles.*,Comments.*');
+        function GetSubmitionInfo($SubmitionInfo){
+            $this->db->select('Submitions.*, Sections.*,Comments.*');
             $this->db->from('Submitions');
             $this->db->join('Sections','Submitions.SectionID=Sections.SectionID');
-            $this->db->join('SubmitFiles','Users.DepartmentID=Departments.DepartmentID');
-            $this->db->where('UserID',$UserInfo);
+            $this->db->join('Comments','Submitions.SectionID=Comments.SectionID');
+            $this->db->where('SubmitionID',$SubmisionInfo);
             $query = $this->db->get();
     
             $result = $query->result();
             return $result;
         }
+
+        
+        function EditSubmationInfo($SubmitionInfo,$SubmitionID){
+            $this->db->where('SubmitionsID',$SubmitionsID);
+            $this->db->update('Submitions',$SubmisionInfo);
+            return true;
+        }
         function deleteSubmition($SubmitionID){
-            
+            $this->db->where('SubmitionID',$SubmitionID);
+            $this->db->delete('Submitions');
+            return true;
         }
         //get contribution in a YEAR
         //

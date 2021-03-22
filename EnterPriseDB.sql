@@ -62,5 +62,6 @@ Create table NotificationLogs (
 Create table Comments (
 	CommentID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	SubmitID int NOT NULL FOREIGN KEY REFERENCES Submition(SubmitID),
-	Comment text
+	Comment text,
+	CommentDay Date not null
 );
