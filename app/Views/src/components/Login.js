@@ -31,6 +31,7 @@ class Login extends Component {
                   <button className="login100-form-btn">
                     SIGN IN
                   </button>
+                  {/* <AdminHome /> */}
                 </div>
               </div>
               <div className="text-center p-t-115">
