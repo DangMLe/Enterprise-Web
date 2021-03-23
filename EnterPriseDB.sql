@@ -24,7 +24,8 @@ Create table Users (
 	UserAge int,
 	UserBday date,
 	UserEmail varchar(30) NOT NULL,
-	DepartmentID int FOREIGN KEY REFERENCES Departments(DepartmentID)
+	DepartmentID int FOREIGN KEY REFERENCES Departments(DepartmentID),
+	UserImage varbinary(max) default null
 );
 create table FileTypes(
 	FileTypeID int NOT NULL IDENTITY(1,1) PRIMARY KEY,

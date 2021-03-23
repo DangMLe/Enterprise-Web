@@ -22,20 +22,38 @@ class BaseController extends Controller
 {
 	protected $UserID='';
 	protected $UserName='';
-	protected $UserPassword='';
 	protected $Role='';
-	protected $UserGender='';
-	protected $UserAge='';
-	protected $UserBday='';
-	protected $UserEmail='';
-	protected $Department='';
+	protected $RoleName='';
+	protected $ImgAvatar='';
+	protected $global=array();
+	protected $lastLogin='';
+
+	public function response($data = NULL)
+    {
+        $this->output->set_status_header(200)->set_content_type('application/json', 'utf-8')->set_output(json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES))->_display();
+        exit ();
+    }
+
+	function isLoggedIn()
+    {
+        $isLoggedIn = $this->session->userdata('isLoggedIn');
+
+        if (!isset ($isLoggedIn) || $isLoggedIn != TRUE) {
+            redirect('login');
+        } else {
+            $this->globalSession();
+        }
+
+        if ($this->Role && !in_array($this->Role, $this->uri->roles)) {
+            $this->loadThis();
+        }
+    }
 
 	public function globalSession(){
 		$this->$UserID = $this->session->userdata('UserID');
 		$this->$UserName = $this->session->userdata('UserName');
-		$this->$UserPassword = $this->session->userdata('UserPassword');
 		$this->$Role = $this->session->userdata('Role');
-		$this->$UserGender = $this->session->userdata('UserGender');
+		$this->$RoleName = $this->session->userdata('UserGender');
 		$this->$UserAge = $this->session->userdata('UserAge');
 		$this->$UserBday = $this->session->userdata('UserBday');
 		$this->$UserEmail = $this->session->userdata('UserEmail');
