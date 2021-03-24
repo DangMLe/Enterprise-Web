@@ -15,15 +15,15 @@ class Login extends Component {
                 <i className="zmdi zmdi-font" />
               </span>
               <div className="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
-                <input className="input100" type="text" name="email" />
-                <span className="focus-input100" data-placeholder="Email" />
+                <input className="input100" type="text" name="email" placeholder="Email" />
+                <span className="focus-input100"/>
               </div>
               <div className="wrap-input100 validate-input" data-validate="Enter password">
                 <span className="btn-show-pass">
                   <i className="zmdi zmdi-eye" />
                 </span>
-                <input className="input100" type="password" name="pass" />
-                <span className="focus-input100" data-placeholder="Password" />
+                <input className="input100" type="password" name="pass" placeholder="Password"/>
+                <span className="focus-input100"/>
               </div>
               <div className="container-login100-form-btn">
                 <div className="wrap-login100-form-btn">
@@ -46,7 +46,8 @@ class Login extends Component {
                     </button>
                   </div>
                 </div>
-              </div></form>
+              </div>
+            </form>
           </div>
         </div>
       </div>
