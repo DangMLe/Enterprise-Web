@@ -60,6 +60,7 @@
             $this->db->delete('Submitions');
             return true;
         }
+        
         //get contribution in a YEAR
         //
     }

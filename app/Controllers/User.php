@@ -9,13 +9,15 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 class User extends BaseController{
+    public function index()
+    {
+        return view('welcome_message');
+    }
     public function __construct(){
         parent::__construct();
         $this->load->model('user-model');
     }
-    public function index(){
 
-    }
     //get users list
     public function userList(){
         $this->load->library('pagination');
@@ -70,7 +72,18 @@ class User extends BaseController{
             }
             redirect('userListing');
         }
-        
+    
+    }
+    function editOldUser($userId = null){
+        if ($userId == null) {
+            redirect('userListing');
+        }
+
+        $data['roles'] = $this->user_model->getRoles();
+        $data['userInfo'] = $this->user_model->getUserInfo($userId);
+
+        $this->global['pageTitle'] = ' Edit User';
+        $this->loadViews("editOld", $this->global, $data, NULL);
     }
     function editUser()
     {
@@ -99,36 +112,26 @@ class User extends BaseController{
             $age = $this->input->post('UserAge');
             $departmentId = $this->input->post('Department');
             $avatarUrl = $this->input->post('Avatar');
-            $userInfo = array(
+
+            if (empty($password)) {
+                $userInfo = array(
                 'UserName'   => $name,
                 'UserEmail' => $email,
-                'UserPassword' => getHashedPassword($password),
                 'RoleId' => $roleId,
                 'UserGender' => $gender,
                 'UserAge' => $age,
                 'DepartmentID' => $departmentId,
-                'UserImage' =>$avatarUrl
-            );
-
-            if (empty($password)) {
-                $userInfo = array(
-                    'email' => $email,
-                    'roleId' => $roleId,
-                    'name' => $name,
-                    'gender' => $gender,
-                    'mobile' => $mobile,
-                    'updatedBy' => $this->vendorId,
-                    'updatedDtm' => date('Y-m-d H:i:s'));
+                'UserImage' =>$avatarUrl);
             } else {
                 $userInfo = array(
-                    'email' => $email,
-                    'password' => getHashedPassword($password),
-                    'roleId' => $roleId,
-                    'name' => ucwords($name),
-                    'gender' => $gender,
-                    'mobile' => $mobile,
-                    'updatedBy' => $this->vendorId,
-                    'updatedDtm' => date('Y-m-d H:i:s')
+                    'UserName'   => $name,
+                    'UserEmail' => $email,
+                    'UserPassword' => getHashedPassword($password),
+                    'RoleId' => $roleId,
+                    'UserGender' => $gender,
+                    'UserAge' => $age,
+                    'DepartmentID' => $departmentId,
+                    'UserImage' =>$avatarUrl
                 );
             }
 
@@ -144,7 +147,7 @@ class User extends BaseController{
 
     function deleteUser()
     {
-        $userId = $this->input->post('userId');
+        $userId = $this->input->post('UserId');
         $result = $this->user_model->deleteUser($userId);
         if ($result > 0) {
             echo(json_encode(array('status' => TRUE)));
@@ -161,6 +164,23 @@ class User extends BaseController{
         $this->global['pageTitle'] = ' Add New User';
         $this->loadViews("addNew", $this->global, $data, NULL);
     }
-    
+    function userProfile($userId){
+        $this->getUserInfo($userId);
+        $this->global['pageTitle'] = 'User Profile';
+        $this->loadViews("Profile", $this->global, $data, NULL);
+    }
+    function uploadAvatar($userId)
+    {
+        $uploadResult = $this->upload(AVATAR_PATH);
+
+        $result = $this->user_model->uploadAvatar($uploadResult['filename'], $userId);
+        if ($result > 0 && !empty($uploadResult['filename'])) {
+            $this->session->set_flashdata('success', 'Upload image successfully');
+        } else {
+            $error = empty($uploadResult['error']) ? 'Upload image failure' : $uploadResult['error'];
+            $this->session->set_flashdata('error', $error);
+        }
+        redirect('profile');
+    }
 }
 ?>
