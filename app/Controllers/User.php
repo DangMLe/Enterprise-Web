@@ -15,7 +15,7 @@ class User extends BaseController{
     }
     public function __construct(){
         parent::__construct();
-        $this->load->model('user-model');
+        $this->load->model('User_model');
     }
 
     //get users list
@@ -181,6 +181,16 @@ class User extends BaseController{
             $this->session->set_flashdata('error', $error);
         }
         redirect('profile');
+    }
+    function SearchUser(){
+        $UserName = ucwords(strtolower($this->security->xss_clean($this->input->post('Search'))));
+        $this->load->library('pagination');
+
+        $data['userRecords'] = $this->user_model->SearchUser();
+
+        $this->global['pageTitle'] = ' User List';
+        $this->loadViews("users", $this->global, $data, NULL);
+
     }
 }
 ?>

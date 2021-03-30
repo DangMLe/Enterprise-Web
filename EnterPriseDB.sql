@@ -27,10 +27,6 @@ Create table Users (
 	DepartmentID int FOREIGN KEY REFERENCES Departments(DepartmentID),
 	UserImage varbinary(max) default null
 );
-create table FileTypes(
-	FileTypeID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	FileType varchar(10)
-);
 Create table Sections(
 	SectionID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	SectionName varchar(20),
@@ -44,9 +40,9 @@ Create table Submition(
 	SubmitName varchar(50) not null,
 	UserID int NOT NULL FOREIGN KEY REFERENCES Users(UserID)
 );
-Create table SubmitFiles (
+Create table SubmitionFiles (
 	FileID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	FileTypeID int NOT NULL FOREIGN KEY REFERENCES FileTypes(FileTypeID),
+	FileTypeID varchar(10) NOT NULL,
 	SubmitID int NOT NULL FOREIGN KEY REFERENCES Submition(SubmitID),
 	FilePath text
 );

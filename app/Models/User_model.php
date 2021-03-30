@@ -14,7 +14,7 @@ class User_model extends Model{
     //Add new user account to the database
     function addUser($userInfo){
         $this->db->trans_start();
-        $this->db->insert('tbl_users', $userInfo);
+        $this->db->insert('Users', $userInfo);
 
         $insert_id = $this->db->insert_id();
 
@@ -25,7 +25,7 @@ class User_model extends Model{
     function addBatchUser($UserData){
         if ($userData) {
             $this->db
-                ->insert_batch('tbl_users', $userData);
+                ->insert_batch('Usersers', $userData);
             return true;
         } else {
             return false;
@@ -62,6 +62,18 @@ class User_model extends Model{
         $this->db->where('UserID',$UserID);
         $this->db->delete('Users');
         return true;
+    }
+    //Search by User name
+    function SearchUser($UserName){
+        $this->db->select('Users.*, Roles.RoleName, Departments.DepartmentName');
+        $this->db->from('Users');
+        $this->db->join('Roles','Users.RoleID=Roles.RoleID');
+        $this->db->join('Departments','Users.DepartmentID=Departments.DepartmentID');
+        $this->db->where('UserName',$UserName);
+        $query = $this->db->get();
+
+        $result = $query->result();
+        return $result;
     }
     //Get Roles available on the database
     function getRoles(){
