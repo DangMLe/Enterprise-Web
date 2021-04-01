@@ -182,5 +182,14 @@ class Submitions extends BaseController{
         }
         redirect('profile');
     }
+    function sendEmail($SubmitionID){
+        $email = \Config\Services::email();
+        $email->setFrom('your@example.com', 'no reply');
+        $email->setTo(this->submitions_model->getUserSubmitionEmail($SubmitionID));
+        $email->setSubject('New User Submition');
+        $email->setMessage('User have Submit their Submition /n Please comment the submition within 14 days /n');
+
+        $email->send();
+    }
 }
 ?>

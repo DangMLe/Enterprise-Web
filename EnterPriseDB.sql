@@ -1,6 +1,7 @@
 use master
-drop database Enterprise
+go
 create database Enterprise
+go
 use Enterprise
 go
 create table Roles (

@@ -22,6 +22,7 @@ class BaseController extends Controller
 {
 	protected $UserID='';
 	protected $UserName='';
+	protected $UserEmail='';
 	protected $Role='';
 	protected $RoleName='';
 	protected $ImgAvatar='';
@@ -52,6 +53,7 @@ class BaseController extends Controller
 	public function globalSession(){
 		$this->$UserID = $this->session->userdata('UserID');
 		$this->$UserName = $this->session->userdata('UserName');
+		$this->$UserEmail = $this->session->userdata('UserEmail');
 		$this->$Role = $this->session->userdata('Role');
 		$this->$RoleName = $this->session->userdata('UserGender');
 		$this->$UserAge = $this->session->userdata('UserAge');

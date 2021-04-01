@@ -19,6 +19,15 @@
             $result = $query->result();
             return $results;
         }
+        function getUserSubmitionEmail($SubmitionID){
+            $this->db->select('Submitions.UserID,User.UserEmail');
+            $this->db->from('Submitions');
+            $this->db->join('Users','Submitions.UserID=Users.UserID');
+            $this->db->where('SubmitionID',$SubmitionID);
+            $query = $this->db->get();
+            $result = $query->result();
+            return $result;
+        }
         function addSubmition($SubmitionInfo){
             $this->db->trans_start();
             $this->db->insert('Submitions',$SubmitionInfo);
