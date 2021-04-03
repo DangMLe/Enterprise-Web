@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Permission extends CI_Model
+class Permission extends BaseController
 {
     /**
      * Permission constructor.
