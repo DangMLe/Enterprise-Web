@@ -19,50 +19,44 @@ class Submitions extends BaseController{
     }
 
     //get users list
-    public function userList(){
+    public function SubmitionList(){
         $this->load->library('pagination');
 
         $data['SubmitionRecords'] = $this->user_model->getAllSubmitions();
 
-        $this->global['pageTitle'] = ' User List';
-        $this->loadViews("users", $this->global, $data, NULL);
+        $this->global['pageTitle'] = ' Submision List';
+        $this->loadViews("Submitions", $this->global, $data, NULL);
+    }
+    public function SubmitionNotificationList(){
+        $this->load->library('pagination');
+
+        $data['SubmitionNotificationRecords'] = $this->user_model->getNotificationsSubmitions();
+
+        $this->global['pageTitle'] = ' Submision List';
+        $this->loadViews("Submitions", $this->global, $data, NULL);
     }
     function addNewSubmitions()
     {
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('SectionID', 'Section', 'trim|required|numeric');
-        $this->form_validation->set_rules('SubmitonName', 'Submition Name', 'trim|required|valid_email|max_length[128]');
-        $this->form_validation->set_rules('UserPassword', 'Password', 'required|max_length[20]');
-        $this->form_validation->set_rules('UserCPassword', 'Confirm Password', 'trim|required|matches[password]|max_length[20]');
-        $this->form_validation->set_rules('Role', 'Role', 'trim|required|numeric');
-        $this->form_validation->set_rules('UserGender', 'Gender', 'trim|required|max_length[10]');
-        $this->form_validation->set_rules('UserAge','Age','trim|required|numeric');
-        $this->form_validation->set_rules('UserBDay','Birthday');
-        $this->form_validation->set_rules('Department','Department', 'trim|required|numeric');
-        $this->form_validation->set_rules('Avatar','Avatar');
+        $this->form_validation->set_rules('SubmitionName', 'Submition Name', 'trim|required|valid_email|max_length[128]');
+        $this->form_validation->set_rules('UserID','Users Id', 'trim|required|numeric');
+        $this->form_validation->set_rules('SubmitDate',"Submition Date");
         if ($this->form_validation->run() == FALSE) {
             $this->addNew();
         } else {
-            $name = ucwords(strtolower($this->security->xss_clean($this->input->post('UserName'))));
-            $email = strtolower($this->security->xss_clean($this->input->post('UserEmail')));
-            $password = $this->input->post('UserPassword');
-            $roleId = $this->input->post('Role');
-            $gender = $this->input->post('UserGender');
-            $age = $this->input->post('UserAge');
-            $departmentId = $this->input->post('Department');
-            $avatarUrl = $this->input->post('Avatar');
-            $userInfo = array(
-                'UserName'   => $name,
-                'UserEmail' => $email,
-                'UserPassword' => getHashedPassword($password),
-                'RoleId' => $roleId,
-                'UserGender' => $gender,
-                'UserAge' => $age,
-                'DepartmentID' => $departmentId,
-                'UserImage' =>$avatarUrl
+            $SectionID = $this->input->post('SectionID');
+            $SubmitionName = $this->input->post('SubmitionName');
+            $UserID = $this->input->post('UserID');
+            $SubmitDate = $this->input->post('SubmitionDate');
+            $SubmitionInfo = array(
+                'SectionID' => $SectionID,
+                'SubmitionName' => $SubmitionName,
+                'UserID' => $UserID,
+                'SubmitDate' => $SubmitionDate
             );
-            $this->load->model('user_model');
+            $this->load->model('submitions_model');
             $result = $this->user_model->addUser($userInfo);
 
             if ($result > 0) {
@@ -70,13 +64,13 @@ class Submitions extends BaseController{
             } else {
                 $this->session->set_flashdata('error', 'User creation failed');
             }
-            redirect('userListing');
+            redirect('SubmitionListing');
         }
     
     }
-    function editOldUser($userId = null){
-        if ($userId == null) {
-            redirect('userListing');
+    function editOldSubmition($SubmitionId = null){
+        if ($SubmitionId == null) {
+            redirect('SubmitionListing');
         }
 
         $data['roles'] = $this->user_model->getRoles();
@@ -85,24 +79,17 @@ class Submitions extends BaseController{
         $this->global['pageTitle'] = ' Edit User';
         $this->loadViews("editOld", $this->global, $data, NULL);
     }
-    function editUser()
+    function editSubmition()
     {
         $this->load->library('form_validation');
 
-        $userId = $this->input->post('userId');
+        $userId = $this->input->post('SectionID');
 
-        $this->form_validation->set_rules('UserName', 'User Name', 'trim|required|max_length[128]');
-        $this->form_validation->set_rules('UserEmail', 'Email', 'trim|required|valid_email|max_length[128]');
-        $this->form_validation->set_rules('UserPassword', 'Password', 'required|max_length[20]');
-        $this->form_validation->set_rules('UserCPassword', 'Confirm Password', 'trim|required|matches[password]|max_length[20]');
-        $this->form_validation->set_rules('Role', 'Role', 'trim|required|numeric');
-        $this->form_validation->set_rules('UserGender', 'Gender', 'trim|required|max_length[10]');
-        $this->form_validation->set_rules('UserAge','Age','trim|required|numeric');
-        $this->form_validation->set_rules('UserBDay','Birthday');
-        $this->form_validation->set_rules('Department','Department', 'trim|required|numeric');
-        $this->form_validation->set_rules('Avatar','Avatar');
+        $this->form_validation->set_rules('SubmitionName', 'Submition Name', 'trim|required|valid_email|max_length[128]');
+        $this->form_validation->set_rules('UserID','Users Id', 'trim|required|numeric');
+        $this->form_validation->set_rules('SubmitDate',"Submition Date");
         if ($this->form_validation->run() == FALSE) {
-            $this->addNew();
+            $this->EditOldSubmition();
         } else {
             $name = ucwords(strtolower($this->security->xss_clean($this->input->post('UserName'))));
             $email = strtolower($this->security->xss_clean($this->input->post('UserEmail')));

@@ -66,6 +66,15 @@
             $ziper->forceDownload($zip_file);
             @unlink($zip_file);
         }
+        public function deleteFiles(){
+            $FileId = $this->input->post('FileId');
+            $result = $this->Files_model->deletFile($FileId);
+            if ($result > 0) {
+                echo(json_encode(array('status' => TRUE)));
+            } else {
+                echo(json_encode(array('status' => FALSE)));
+            }
+        }
         public function viewtxtArticle($filePath){
             if(!file_exists($filePath)){
                 $this->session->set_flashdata('error','No such file or directory');

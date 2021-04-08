@@ -19,6 +19,13 @@
             $result = $query->result();
             return $results;
         }
+        function getNotificationsSubmitions(){
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $this->db->query('SELECT * FROM Submitions WHERE SubmitDate <=?',[date('Y-m-d')]);
+            $query = $this->db->get();
+            $result = $query->result();
+            return $result;
+        }
         function getUserSubmitionEmail($SubmitionID){
             $this->db->select('Submitions.UserID,User.UserEmail');
             $this->db->from('Submitions');

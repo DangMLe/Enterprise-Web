@@ -1,3 +1,4 @@
+<?php
 public function add($post_id) {
     // if nothing posted redirect
     if (!$this->input->post()) {
@@ -18,3 +19,4 @@ public function add($post_id) {
         redirect('posts/'.$post_id, 'refresh');
     }
 }
+?>

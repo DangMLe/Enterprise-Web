@@ -39,7 +39,8 @@ Create table Submition(
 	SubmitID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
 	SectionID int FOREIGN KEY REFERENCES Sections(SectionID),
 	SubmitName varchar(50) not null,
-	UserID int NOT NULL FOREIGN KEY REFERENCES Users(UserID)
+	UserID int NOT NULL FOREIGN KEY REFERENCES Users(UserID),
+	SubmitDate date
 );
 Create table SubmitionFiles (
 	FileID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
