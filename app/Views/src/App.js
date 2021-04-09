@@ -1,11 +1,12 @@
 import React , { Component } from "react";
-import Login from "./components/Login";
+import Login from "./pages/login";
+import Admin from "./pages/admin";
 
-class App extends Component {
-  render(){
+function App() {{
       return (
       <div className="App">
-        <Login />
+        {/* <Login /> */}
+        <Admin />
       </div>
     );
   }
