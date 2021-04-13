@@ -3,6 +3,7 @@ import Admin from "../admin";
 import "../scss/Login.scss";
 
 export default function index() {
+
   return (
     <div className="Login">
       <div className="container-login100">
@@ -43,7 +44,7 @@ export default function index() {
                   <div className="login101-form-bgbtn" />
                   <button className="login101-form-btn">
                     Sign in as Guest
-                    </button>
+                  </button>
                 </div>
               </div>
             </div>

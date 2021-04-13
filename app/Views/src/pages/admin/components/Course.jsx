@@ -8,7 +8,7 @@ export default function Course({name, image, des, status, teacher_name, teacher_
                     <img src={image} alt="" />
                     {
                         status === 'dang-dien-ra' ? <span className="badge b1">Đang kết thúc</span>
-                        : status === 'da-ket-thuc' ? <span className="badge b2">Đã kết thúc</span>
+                        : status === 'da-ket-thuc' ? <span className="badge b2"></span>
                         : <span className="badge b3">Đã kết thúc</span>
                     }
                     
