@@ -5,8 +5,8 @@ import Admin from "./pages/admin";
 function App() {{
       return (
       <div className="App">
-        {/* <Login /> */}
-        <Admin />
+        <Login />
+        {/* <Admin /> */}
       </div>
     );
   }

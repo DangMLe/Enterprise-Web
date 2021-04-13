@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Admin from "../admin";
 import "../scss/Login.scss";
 
 export default function index() {
@@ -27,7 +28,7 @@ export default function index() {
             <div className="container-login100-form-btn">
               <div className="wrap-login100-form-btn">
                 <div className="login100-form-bgbtn" />
-                <button className="login100-form-btn">
+                <button className="login100-form-btn" onClick={routerAdmin}>
                   SIGN IN
                   </button>
                 {/* <AdminHome /> */}
